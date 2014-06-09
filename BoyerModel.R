@@ -89,6 +89,7 @@ Boyer<-function(times, n,...) {
   seed.x=rep(NA,100)
   seed.y=rep(NA,100)
   seed.distance=rep(NA,100)
+  theta.Stoc<-runif(times,min=0,max=5)
   
   x[1]<-tree1[1,1]
   y[1]<-tree1[1,2]
@@ -105,10 +106,15 @@ Boyer<-function(times, n,...) {
       xp[i]=treeM[which(d==dis.sort[1]),1]
       yp[i]=treeM[which(d==dis.sort[1]),2]
       dist=Max.distance(x[i-1],y[i-1],xp[i],yp[i])
-      theta=path.theta(y[i-1],yp[i],dist)
-      x[i]=10*cos(theta)
-      y[i]=10*sin(theta)
-      
+      if(dist > 10){
+        theta=path.theta(y[i-1],yp[i],dist)
+        x[i]=10*cos(theta+theta.Stoc[i])
+        y[i]=10*sin(theta+theta.Stoc[i])
+      }
+      else{
+        x[i]=xp[i]
+        y[i]=y[i]
+      }
       treeL[[i]]<-treeL[[1]][-which(d==dis.sort[1]),]
     }
     else{
@@ -121,9 +127,15 @@ Boyer<-function(times, n,...) {
       yp[i]=treeM[which(d==dis.sort[1]),2]
       dist=Max.distance(x[i-1],y[i-1],xp[i],yp[i])
       theta=path.theta(y[i-1],yp[i],dist)
-      x[i]=10*cos(theta)
-      y[i]=10*sin(theta)
-      
+      if(dist > 10){
+        theta=path.theta(y[i-1],yp[i],dist)
+        x[i]=10*cos(theta+theta.Stoc[i])
+        y[i]=10*sin(theta+theta.Stoc[i])
+      }
+      else{
+        x[i]=xp[i]
+        y[i]=y[i]
+      }
       treeL[[i]]<-treeM[-which(d==dis.sort[1]),]
     }
     coordinates = location(times,x[i],y[i],i)
