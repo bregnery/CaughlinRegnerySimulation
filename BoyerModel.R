@@ -35,6 +35,16 @@ seed.distance<-function(x,y,treeDAT) {
   return(distance)
 }
 
+Max.distance<-function(x,y,xp,yp) {
+  distance<-(sqrt((x-xp)^2+(y-yp)^2))
+  return(distance)
+}
+
+path.theta<-function(y,yp,dist){
+  theta<-(asin((yp-y)/dist))
+  return(theta)
+}
+
 moveTime<-function(velocity, x, y, i){
   
   movementTime<-(sqrt((x[i-1]-x[i])^2+(y[i-1]-y[i])^2))/velocity
@@ -65,7 +75,9 @@ Boyer<-function(times, n,...) {
   
   
   x=rep(NA,times)
+  xp=rep(NA,times)
   y=rep(NA,times)
+  yp=rep(NA,times)
   time.total = rep(0,1)
   time.near = rep(0,1)
   time.fraction = rep(0,1)
@@ -90,9 +102,12 @@ Boyer<-function(times, n,...) {
       d=tree.distance(x[i-1],y[i-1],treeM)
       
       dis.sort<-sort(d)
-      x[i]=treeM[which(d==dis.sort[1]),1]
-      y[i]=treeM[which(d==dis.sort[1]),2]
-      
+      xp[i]=treeM[which(d==dis.sort[1]),1]
+      yp[i]=treeM[which(d==dis.sort[1]),2]
+      dist=Max.distance(x[i-1],y[i-1],xp[i],yp[i])
+      theta=path.theta(y[i-1],yp[i],dist)
+      x[i]=10*cos(theta)
+      y[i]=10*sin(theta)
       
       treeL[[i]]<-treeL[[1]][-which(d==dis.sort[1]),]
     }
@@ -102,9 +117,12 @@ Boyer<-function(times, n,...) {
       d=tree.distance(x[i-1],y[i-1],treeM)
       
       dis.sort<-sort(d)
-      x[i]=treeM[which(d==dis.sort[1]),1]
-      y[i]=treeM[which(d==dis.sort[1]),2]
-    
+      xp[i]=treeM[which(d==dis.sort[1]),1]
+      yp[i]=treeM[which(d==dis.sort[1]),2]
+      dist=Max.distance(x[i-1],y[i-1],xp[i],yp[i])
+      theta=path.theta(y[i-1],yp[i],dist)
+      x[i]=10*cos(theta)
+      y[i]=10*sin(theta)
       
       treeL[[i]]<-treeM[-which(d==dis.sort[1]),]
     }
