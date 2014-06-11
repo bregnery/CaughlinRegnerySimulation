@@ -64,7 +64,7 @@ location<-function(times, x, y, i) {
   return(coordinates)
 }
 
-Boyer<-function(times, n,...) {
+Boyer<-function(times, n,ANG=0.0872,...) {
   tree1<-treelocs(n)
   
   treeSIZE<-runif(n,min=20,max=100)
@@ -89,14 +89,14 @@ Boyer<-function(times, n,...) {
   seed.x=rep(NA,100)
   seed.y=rep(NA,100)
   seed.distance=rep(NA,100)
-  theta.Stoc<-runif(times,min=0,max=5)
+  theta.Stoc<-runif(times,min=-ANG,max=ANG)
   
   x[1]<-tree1[1,1]
   y[1]<-tree1[1,2]
   
   for (i in 2:times){
     treeM<-treeL[[i-1]]
-  
+  print(i)
     if(dim(t(data.frame(treeM)))[1]==1) {
       
       treeM<-t(data.frame(treeM))
@@ -113,7 +113,7 @@ Boyer<-function(times, n,...) {
       }
       else{
         x[i]=xp[i]
-        y[i]=y[i]
+        y[i]=yp[i]
       }
       treeL[[i]]<-treeL[[1]][-which(d==dis.sort[1]),]
     }
@@ -134,13 +134,16 @@ Boyer<-function(times, n,...) {
       }
       else{
         x[i]=xp[i]
-        y[i]=y[i]
+        y[i]=yp[i]
       }
-      treeL[[i]]<-treeM[-which(d==dis.sort[1]),]
+      vist.dist<-Max.distance(x[i],y[i],xp[i],yp[i])
+      if(vist.dist<10){
+        treeL[[i]]<-treeM[-which(d==dis.sort[1]),]
+      }
+      else{
+        treeL[[i]]<-treeM
+      }
     }
-    coordinates = location(times,x[i],y[i],i)
-    x[i] = coordinates[1]
-    y[i] = coordinates[2]
     time.move[i]=moveTime(0.5,x,y,i)
     time.total= time.total + time.move[i] + 30
     time.current[i]=time.total
@@ -181,21 +184,21 @@ Boyer<-function(times, n,...) {
   points(seed.x,seed.y,cex=0.9,pch=19,col="brown")
   
   print(time.total)
-  return(seed.distance)
-  
+  #return(seed.distance)
+  return(cbind(x,y))
 }
 
 #at each time step, animal goes to tree with BIGGEST tree.distance function
 #spends a certain amount of time there
 #then goes to the next biggest tree
 # does not return to the same tree for 100 time steps
-Boyer(25,10)
+Boyer(25,10,ANG=0)
 
 
 seed.hist<-matrix(NA,ncol=30,nrow=100)
 
 for(i in 1:30) {
-  seed.hist[,i]<-Boyer(25,10)
+  seed.hist[,i]<-Boyer(25,10,ANG=0)
   
 }
 
