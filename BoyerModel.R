@@ -1,3 +1,4 @@
+#Bug has been quarintened to lines 139-143
 library("plotrix")
 
 treelocs<-function(n) {
@@ -115,15 +116,15 @@ Boyer<-function(times, n,ANG=0.0872,...) {
       xp[i]=treeM[which(d==dis.sort[1]),1]
       yp[i]=treeM[which(d==dis.sort[1]),2]
       dist=Max.distance(x[i-1],y[i-1],xp[i],yp[i])
-      if(dist > 10){
-        theta=path.theta(x[i-1],xp[i],y[i-1],yp[i],dist)
-        x[i]=10*cos(theta+theta.Stoc[i])
-        y[i]=10*sin(theta+theta.Stoc[i])
-      }
-      else{
+      #if(dist > 10){
+        #theta=path.theta(x[i-1],xp[i],y[i-1],yp[i],dist)
+        #x[i]=10*cos(theta+theta.Stoc[i])
+        #y[i]=10*sin(theta+theta.Stoc[i])
+      #}
+      #else{
         x[i]=xp[i]
         y[i]=yp[i]
-      }
+      #}
       treeL[[i]]<-treeL[[1]][-which(d==dis.sort[1]),]
     }
     else{
@@ -135,15 +136,15 @@ Boyer<-function(times, n,ANG=0.0872,...) {
       xp[i]=treeM[which(d==dis.sort[1]),1]
       yp[i]=treeM[which(d==dis.sort[1]),2]
       dist=Max.distance(x[i-1],y[i-1],xp[i],yp[i])
-      if(dist > 10){
-        theta=path.theta(x[i-1],xp[i],y[i-1],yp[i],dist)
-        x[i]=10*cos(theta+theta.Stoc[i])
-        y[i]=10*sin(theta+theta.Stoc[i])
-      }
-      else{
+      #if(dist > 10){
+      #  theta=path.theta(x[i-1],xp[i],y[i-1],yp[i],dist)
+      #  x[i]=10*cos(theta+theta.Stoc[i])
+       # y[i]=10*sin(theta+theta.Stoc[i])
+      #}
+      #else{
         x[i]=xp[i]
         y[i]=yp[i]
-      }
+      #}
       vist.dist<-Max.distance(x[i],y[i],xp[i],yp[i])
       if(vist.dist<10){
         treeL[[i]]<-treeM[-which(d==dis.sort[1]),]
