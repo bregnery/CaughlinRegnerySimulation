@@ -40,8 +40,17 @@ Max.distance<-function(x,y,xp,yp) {
   return(distance)
 }
 
-path.theta<-function(y,yp,dist){
+#returns angle with respect to the positive x axis
+path.theta<-function(x,xp,y,yp,dist){
   theta<-(asin((yp-y)/dist))
+  xdiff<-(x-xp)
+  ydiff<-(y-yp)
+  if(xdiff < 0 && ydiff > 0){
+    theta = theta + 1.570796327
+  }
+  else if(xdiff < 0 && ydiff < 0){
+    theta = theta - 1.570796327
+  }
   return(theta)
 }
 
@@ -107,7 +116,7 @@ Boyer<-function(times, n,ANG=0.0872,...) {
       yp[i]=treeM[which(d==dis.sort[1]),2]
       dist=Max.distance(x[i-1],y[i-1],xp[i],yp[i])
       if(dist > 10){
-        theta=path.theta(y[i-1],yp[i],dist)
+        theta=path.theta(x[i-1],xp[i],y[i-1],yp[i],dist)
         x[i]=10*cos(theta+theta.Stoc[i])
         y[i]=10*sin(theta+theta.Stoc[i])
       }
@@ -126,9 +135,8 @@ Boyer<-function(times, n,ANG=0.0872,...) {
       xp[i]=treeM[which(d==dis.sort[1]),1]
       yp[i]=treeM[which(d==dis.sort[1]),2]
       dist=Max.distance(x[i-1],y[i-1],xp[i],yp[i])
-      theta=path.theta(y[i-1],yp[i],dist)
       if(dist > 10){
-        theta=path.theta(y[i-1],yp[i],dist)
+        theta=path.theta(x[i-1],xp[i],y[i-1],yp[i],dist)
         x[i]=10*cos(theta+theta.Stoc[i])
         y[i]=10*sin(theta+theta.Stoc[i])
       }
