@@ -114,8 +114,15 @@ Boyer<-function(times, n, stepdist, ANG=0.0872,...) {
       
       treeM<-t(data.frame(treeM))
       d=tree.distance(x[i-1],y[i-1],treeM)
-      
       dis.sort<-sort(d)
+      
+      #Prevents animal from returning to the same tree when the loop is rerun
+      #if(dis.sort[1]==0.){
+      #  treeL[[i]]<-treeL[[1]][-which(d==dis.sort[1]),]
+      #  d=tree.distance(x[i-1],y[i-1],treeM)
+      #  dis.sort<-sort(d)
+      #}
+      
       xp[i]=treeM[which(d==dis.sort[1]),1]
       yp[i]=treeM[which(d==dis.sort[1]),2]
       dist=Max.distance(x[i-1],y[i-1],xp[i],yp[i])
@@ -204,7 +211,7 @@ Boyer<-function(times, n, stepdist, ANG=0.0872,...) {
 #spends a certain amount of time there
 #then goes to the next biggest tree
 # does not return to the same tree for 100 time steps
-Boyer(25,10,10,ANG=0)
+Boyer(25,10,1000,ANG=0)
 
 
 seed.hist<-matrix(NA,ncol=30,nrow=100)
