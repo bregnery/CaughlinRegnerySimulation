@@ -50,7 +50,7 @@ path.theta<-function(x,xp,y,yp,dist){
     theta = 3.141592654 - theta
   }
   else if(xdiff < 0 && ydiff < 0){
-    theta = theta - 1.570796327
+    theta = -3.141592654 - theta
   }
   else{
     theta = theta
@@ -121,8 +121,8 @@ Boyer<-function(times, n,ANG=0.0872,...) {
       dist=Max.distance(x[i-1],y[i-1],xp[i],yp[i])
       if(dist > 10){
         theta=path.theta(x[i-1],xp[i],y[i-1],yp[i],dist)
-        x[i]=x[i-1]+dist*cos(theta+theta.Stoc[i])
-        y[i]=y[i-1]+dist*sin(theta+theta.Stoc[i])
+        x[i]=x[i-1]+10*cos(theta+theta.Stoc[i])
+        y[i]=y[i-1]+10*sin(theta+theta.Stoc[i])
       }
       else{
         x[i]=xp[i]
@@ -141,8 +141,8 @@ Boyer<-function(times, n,ANG=0.0872,...) {
       dist=Max.distance(x[i-1],y[i-1],xp[i],yp[i])
       if(dist > 10){
         theta=path.theta(x[i-1],xp[i],y[i-1],yp[i],dist)
-        x[i]=x[i-1]+dist*cos(theta+theta.Stoc[i])
-        y[i]=y[i-1]+dist*sin(theta+theta.Stoc[i])
+        x[i]=x[i-1]+10*cos(theta+theta.Stoc[i])
+        y[i]=y[i-1]+10*sin(theta+theta.Stoc[i])
       }
       else{
         x[i]=xp[i]
