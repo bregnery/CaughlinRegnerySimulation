@@ -1,4 +1,4 @@
-#Bug has been quarintened to lines 139-143
+#last bug remaining causes the animal to stay at the same tree every so many time steps
 library("plotrix")
 
 treelocs<-function(n) {
@@ -77,7 +77,7 @@ location<-function(times, x, y, i) {
   return(coordinates)
 }
 
-Boyer<-function(times, n,ANG=0.0872,...) {
+Boyer<-function(times, n, stepdist, ANG=0.0872,...) {
   tree1<-treelocs(n)
   
   treeSIZE<-runif(n,min=20,max=100)
@@ -119,10 +119,10 @@ Boyer<-function(times, n,ANG=0.0872,...) {
       xp[i]=treeM[which(d==dis.sort[1]),1]
       yp[i]=treeM[which(d==dis.sort[1]),2]
       dist=Max.distance(x[i-1],y[i-1],xp[i],yp[i])
-      if(dist > 10){
+      if(dist > stepdist){
         theta=path.theta(x[i-1],xp[i],y[i-1],yp[i],dist)
-        x[i]=x[i-1]+10*cos(theta+theta.Stoc[i])
-        y[i]=y[i-1]+10*sin(theta+theta.Stoc[i])
+        x[i]=x[i-1]+stepdist*cos(theta+theta.Stoc[i])
+        y[i]=y[i-1]+stepdist*sin(theta+theta.Stoc[i])
       }
       else{
         x[i]=xp[i]
@@ -139,10 +139,10 @@ Boyer<-function(times, n,ANG=0.0872,...) {
       xp[i]=treeM[which(d==dis.sort[1]),1]
       yp[i]=treeM[which(d==dis.sort[1]),2]
       dist=Max.distance(x[i-1],y[i-1],xp[i],yp[i])
-      if(dist > 10){
+      if(dist > stepdist){
         theta=path.theta(x[i-1],xp[i],y[i-1],yp[i],dist)
-        x[i]=x[i-1]+10*cos(theta+theta.Stoc[i])
-        y[i]=y[i-1]+10*sin(theta+theta.Stoc[i])
+        x[i]=x[i-1]+stepdist*cos(theta+theta.Stoc[i])
+        y[i]=y[i-1]+stepdist*sin(theta+theta.Stoc[i])
       }
       else{
         x[i]=xp[i]
@@ -204,7 +204,7 @@ Boyer<-function(times, n,ANG=0.0872,...) {
 #spends a certain amount of time there
 #then goes to the next biggest tree
 # does not return to the same tree for 100 time steps
-Boyer(25,10,ANG=0)
+Boyer(25,10,10,ANG=0)
 
 
 seed.hist<-matrix(NA,ncol=30,nrow=100)
