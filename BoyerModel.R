@@ -23,7 +23,7 @@ tree.distance<-function(x,y,treeDAT) {
   return(distance)
 }
 
-seed.distance<-function(x,y,treeDAT) {
+seed.distancef<-function(x,y,treeDAT) {
   
   treeDAT<-data.frame(treeDAT)
   
@@ -187,7 +187,7 @@ Boyer<-function(times, n, stepdist, ANG=0.0872,...) {
   for(i in 1:100){
     treeM<-treeL[[1]]
     treeM<-t(data.frame(treeM))
-    seed.distance[i]=min(seed.distance(seed.x[i],seed.y[i],treeM))
+    seed.distance[i]=min(seed.distancef(seed.x[i],seed.y[i],treeM))
     }
   #hist(seed.distance,breaks=10,main="Seed Distance to the Nearest Tree")
   treeM1<-treeL[[1]]
@@ -203,8 +203,8 @@ Boyer<-function(times, n, stepdist, ANG=0.0872,...) {
   points(seed.x,seed.y,cex=0.9,pch=19,col="brown")
   
   print(time.total)
-  #return(seed.distance)
-  return(cbind(x,y))
+  return(seed.distance)
+  #return(cbind(x,y))
 }
 
 #at each time step, animal goes to tree with BIGGEST tree.distance function
@@ -213,16 +213,33 @@ Boyer<-function(times, n, stepdist, ANG=0.0872,...) {
 # does not return to the same tree for 100 time steps
 Boyer(25,10,1000,ANG=0)
 
+nsim<-10
 
-seed.hist<-matrix(NA,ncol=30,nrow=100)
+stoch<-seq(from=0,to=2*pi,by=0.01)
 
-for(i in 1:30) {
-  seed.hist[,i]<-Boyer(25,10,ANG=0)
-  
+stoch.use<-rep(stoch,times=nsim)
+
+nruns<-length(stoch.use)
+
+output<-vector("list",nruns)
+
+for(i in 1:nruns) {
+  seedo<-Boyer(25,10,10,ANG=stoch.use[i])
+  data1<-data.frame(seed.distance,rep(i,times=length(seed.distance),rep(stoch.use[i],times=length(seed.distance))))
+  output[[i]]<-data1
 }
 
-hist(c(seed.hist),col="pink",
-     xlab="Distance to nearest conspecific (m)",
-     main="Memory-based movement model")
+
+
+#seed.hist<-matrix(NA,ncol=30,nrow=100)
+
+#for(i in 1:30) {
+#  seed.hist[,i]<-Boyer(25,10,ANG=0)
+  
+#}
+
+#hist(c(seed.hist),col="pink",
+#     xlab="Distance to nearest conspecific (m)",
+#     main="Memory-based movement model")
 
 #
