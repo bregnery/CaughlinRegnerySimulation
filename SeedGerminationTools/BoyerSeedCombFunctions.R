@@ -341,9 +341,9 @@ Boyer<-function(times, adults, stepdist, ANG=0.0872,...) {
   lines(x,y,type="l") #,...)
   points(x,y,pch=19,cex=1.5)
   
-  #for(j in 1:n) {
-  #  draw.circle(tree1[j,1],tree1[j,2],radius=10,border="green",lwd=2,col=NA)
-  #}
+  for(j in 1:length(adults)) {
+    draw.circle(tree1[j,1],tree1[j,2],radius=10,border="green",lwd=2,col=NA)
+  }
   
   #plot(treeM[,1],treeM[,2],pch=21,cex=1,bg="red",main="Seed Dispersal Plot", xlab="X(meters)",ylab="Y(meters)")
   points(seed.x,seed.y,cex=0.9,pch=19,col="brown")
@@ -352,6 +352,6 @@ Boyer<-function(times, adults, stepdist, ANG=0.0872,...) {
   #seed.locs[,2]=seed.y
   
   #print(time.total)
-  return(cbind(seed.x,seed.y,seed.distancef))
+  return(cbind(seed.x,seed.y,seed.distance))
   #return(cbind(x,y))
 }
