@@ -1,0 +1,512 @@
+seed.x[i] = (x[j]+x[l])/time.fraction
+seed.y[i] = (y[j]+y[l])/time.fraction
+if(time.poop[i] > time.total){
+seed.x[i]=NA
+seed.y[i]=NA
+}
+}
+i<-1
+print(i)
+j=1
+time.poop[i] >= time.total || time.poop[i] <= time.current[j]
+time.ppop[i]
+time.poop[i]
+time.current[j]
+time.current
+Boyer<-function(times, n,...) {
+tree1<-treelocs(n)
+treeSIZE<-runif(n,min=20,max=100)
+treeL<-vector("list",length=times)
+treeL[[1]]<-cbind(tree1,treeSIZE)
+x=rep(NA,times)
+y=rep(NA,times)
+time.total = rep(0,1)
+time.near = rep(0,1)
+time.fraction = rep(0,1)
+time.move = rep(NA,times)
+time.current = rep(NA,times)
+time.current[1]=0
+time.poop = rep(NA,100)
+seed.x=rep(NA,times)
+seed.y=rep(NA,times)
+x[1]<-0
+y[1]<-0
+for (i in 2:times){
+treeM<-treeL[[i-1]]
+if(dim(t(data.frame(treeM)))[1]==1) {
+treeM<-t(data.frame(treeM))
+d=tree.distance(x[i-1],y[i-1],treeM)
+dis.sort<-sort(d)
+x[i]=treeM[which(d==dis.sort[1]),1]
+y[i]=treeM[which(d==dis.sort[1]),2]
+treeL[[i]]<-treeL[[1]][-which(d==dis.sort[1]),]
+}
+else{
+d=tree.distance(x[i-1],y[i-1],treeM)
+dis.sort<-sort(d)
+x[i]=treeM[which(d==dis.sort[1]),1]
+y[i]=treeM[which(d==dis.sort[1]),2]
+treeL[[i]]<-treeM[-which(d==dis.sort[1]),]
+}
+coordinates = location(times,x[i],y[i],i)
+x[i] = coordinates[1]
+y[i] = coordinates[2]
+time.move[i]=moveTime(0.5,x,y,i)
+time.total= time.total + time.move[i] + 30
+time.current[i]=time.total
+}
+#Poop time
+time.poop<-(rexp(100,rate=0.004))
+#Seed location
+for(i in 1:100){
+print(i)
+j=1
+repeat{
+if(time.poop[i] >= time.total || time.poop[i] <= time.current[j]){
+break
+}
+j=j+1
+}
+time.near = time.poop[i] - time.current[j]
+time.fraction = time.move[j]/time.near
+seed.x[i] = (x[j]+x[l])/time.fraction
+seed.y[i] = (y[j]+y[l])/time.fraction
+if(time.poop[i] > time.total){
+seed.x[i]=NA
+seed.y[i]=NA
+}
+}
+plot(treeM[,1],treeM[,2],pch=21,cex=1,bg="red",xlim=c(-1,100),ylim=c(-1,100))
+lines(x,y,type="l") #,...)
+points(x,y,pch=19,cex=3)
+plot(treeM[,1],treeM[,2],pch=21,cex=1,bg="red",xlim=c(-1,100),ylim=c(-1,100))
+points(seed.x,seed.y)
+for(j in 1:n) {
+draw.circle(tree1[j,1],tree1[j,2],radius=10,border="purple",col=NA)
+}
+print(time.total)
+return(data.frame(x,y,time.current))
+}
+#at each time step, animal goes to tree with BIGGEST tree.distance function
+#spends a certain amount of time there
+#then goes to the next biggest tree
+# does not return to the same tree for 100 time steps
+Boyer(25,10)
+l<-100
+Boyer(25,10)
+0.5/10
+0.5/10
+0.5/0.1
+(0.5*95)/0.1
+(0.3*45)/0.8
+(0.1*60)/0.01
+corr
+cor
+scale
+#one more panel
+#bft=ggplot(bftplot2,aes(x=time,y=decision,fill=class)) + geom_area(show_guide=FALSE,alpha=1,position="identity")+ scale_fill_grey(start=0.8,end=.6) + coord_cartesian(ylim=c(0,1))+ scale_x_continuous('Time (Days)') + scale_y_continuous('Host quality')+ geom_line(show_guide=FALSE,aes(linetype=class),size=1) + scale_linetype_manual(values=c("solid", "dotted", "longdash"))
+#first thing is getting the new keys assembled for the plots.
+setwd("C:/Users/Trevor/Dropbox/R files")
+setwd("C:/Users/trevorcaughlin/Dropbox/R files")
+source("generalBAYESIANcode.r")
+#figures
+library("abind")
+library("sn")
+library("lattice")
+library("spam")
+#setting spam up to give a larger nearestdistnnz so it doesn't crash:
+spam.options(nearestdistnnz=   c(53248651 ,400))
+setwd("C:/Users/Trevor/Dropbox/R files/Thailand/2010-2011/population stuff/4.23")
+setwd("C:/Users/trevorcaughlin/Dropbox/R files/Thailand/2010-2011/population stuff/4.23")
+source("newFUNCTIONS 4.23.r")
+#
+#
+#############THIS READS IN THE PARAMETER VALUES FROM THE STATISTICAL ANALYSIS
+IBMpars<-read.csv("IBMpars12.16.csv",header=T)
+###############Median parameter values
+med.par<-lapply(IBMpars,median)
+attach(med.par)
+setwd("C:/Users/Trevor/Dropbox/R files/Thailand/2010-2011/population stuff/4.23")
+setwd("C:/Users/trevorcaughlin/Dropbox/R files/Thailand/2010-2011/population stuff/4.23")
+source("newFUNCTIONS 4.23.r")
+#I would like to look at the probability distributions for everything.
+#relative importance of the different ones?
+#what you need is seedling survival, also raw data.
+mean.val<-(mu.sg+size.sg*ht)*exp(beta.sg*count)*exp(adz)
+#seedling survival
+setwd("C:/Users/Trevor/Dropbox/R files/Thailand/2010-2011/population stuff")
+load("nhood.SS.Rdata")
+pars<-gipar(nhood.SS)
+#1111111111111111
+#1111111111111111
+#1111111111111111
+#1111111111111111
+par(mfrow=c(1,1))
+par(mar=c(3,3,1,1.5))
+#####SEED DISPERSAL
+setwd("C:/Users/Trevor/Dropbox/R files/Thailand/2010-2011/seed and seedling stuff/seed dispersal model/KERENEL model")
+load("MclarkINFO.7.27.outputsuitableforIBM.Rdata")
+#one of these is g(r) #this is the distance pdf #this is the one that you want
+#need to double check (?)
+PDFclark2dt<-function(x,u) {
+p<-1
+2*pi*x*(p/(3.141593*u))/(1+(x^2/u))^(p+1)
+}
+#quantiles:
+ud<-IBMpars$u.dispersal
+#quantile(PDFclark2dt(100,ud),c(0.025,0.5,0.975))
+ds<-c(100:10000)
+dist.100<-matrix(nrow=1000,ncol=length(ds))
+for(i in 1:1000) {
+dist.100[i,]<-PDFclark2dt(ds,ud[i])
+}
+quantile(rowSums(dist.100),c(0,0.025,0.5,0.975))
+curve(PDFclark2dt(x,u.dispersal),from=0,to=200,ylim=c(0,0.025),xlab="",ylab="",col="white",cex.axis=1.9)
+for(i in 1:1000) {
+curve(PDFclark2dt(x,IBMpars$u.dispersal[i]),add=T,col=rgb(0,0,0,0.015))
+}
+curve(PDFclark2dt(x,u.dispersal),add=T,col="black",lwd=6.5,lty=2)
+#abline(v=20,col="green",lty=2,lwd=3)
+####questions: do you include size in here?
+http://www.jstatsoft.org/v18/i02/
+#http://cran.r-project.org/doc/Rnews/Rnews_2006-3.pdf
+#fhttp://cran.r-project.org/web/packages/pls/pls.pdf
+setwd("C:/Users/Trevor/Dropbox/R files")
+setwd("C:/Users/trevorcaughlin/Dropbox/R files")
+source("generalBAYESIANcode.r")
+library("pls")
+library(MASS)
+#library("qpcR")
+library("MPV")
+#next steps:
+#1. get DEM out
+#2. merge with plots and species ID and average growth rate
+#take out Sarah's bad plots
+#3. regression trees http://www.stat.cmu.edu/~cshalizi/350/lectures/22/lecture-22.pdf
+#http://cran.r-project.org/web/packages/tree/tree.pdf
+#4. PCA main axis or something
+#trees: MODEL selection by AIC
+#maybe species in block DOES make sense.
+setwd("C:/Users/Trevor/Dropbox/R files")
+setwd("C:/Users/trevorcaughlin/Dropbox/R files")
+source("generalBAYESIANcode.r")
+library(lme4)
+setwd("C:/Users/trevorcaughlin/Dropbox/R files/reforestation R code/PRORENA/PRORENA_plot_Inventory_in_Los_Santos")
+setwd("C:/Users/Trevor/Dropbox/R files/reforestation R code/PRORENA/PRORENA_plot_Inventory_in_Los_Santos")
+DBH<-read.table(file="Bohlman_DBH.txt",sep=",",header=T)
+#is this the right one to use?
+tree.id<-unique(DBH$TREE)
+#7061 trees!
+TREES<-read.table(file="Bohlman_Trees.csv",sep=",",header=T)
+tID<-TREES$TREE
+length(which(tID %in% tree.id==F))
+#5539 trees are in survival data but NOT in tree data
+stsum<-function(year) {
+tree<-unique(year$TREE)
+n<-length(tree)
+sum.dbh<-rep(NA,times=n)
+for(i in 1:n) {
+sum.dbh[i]<-sqrt(sum(year$DiamBH[which(year$TREE==tree[i])]^2))}
+return(data.frame(tree,sum.dbh))
+}
+#4 years
+d1<-subset(DBH,DBH$Y==1)
+dfirst<-stsum(d1)
+d2<-subset(DBH,DBH$Y==2)
+dsecond<-stsum(d2)
+d3<-subset(DBH,DBH$Y==3)
+dthird<-stsum(d3)
+d4<-subset(DBH,DBH$Y==4)
+dfour<-stsum(d4)
+census1<-merge(dfirst,dsecond,by.x="tree",by.y="tree")
+c1<-merge(census1,TREES,by.x="tree",by.y="TREE")
+census2<-merge(dsecond,dthird,by.x="tree",by.y="tree")
+c2<-merge(census2,TREES,by.x="tree",by.y="TREE")
+census3<-merge(dthird,dfour,by.x="tree",by.y="tree")
+c3.0<-merge(census3,TREES,by.x="tree",by.y="TREE")
+growth<-c3.0[,3]-c3.0[,2]
+c3.1<-data.frame(c3.0,growth)
+c3<-c3.1[-which(growth<0),]
+c3<-c3[order(c3$SPEC_ID),]
+spp<-sort(unique(c3$SPEC_ID))
+new.gro<-vector("list",length(spp))
+for(i in 1:length(spp)) {
+new.dat<-c3[which(c3$SPEC_ID==spp[i]),]
+st.gro<-stdize(new.dat$growth)
+new.gro[[i]]<-data.frame(new.dat,st.gro)
+}
+growy<-do.call(rbind,new.gro)
+plot(growy$st.gro~growy$growth)
+cUSE<-data.frame(growy$PLOT,growy$st.gro)
+colnames(cUSE)<-c("c3.PLOT","growth")
+cHEAD=aggregate(cUSE, by=list(cUSE$c3.PLOT), mean)
+dim(cHEAD)
+USE=read.csv("USEplots5_23.csv")
+onlyGOOD=merge(cHEAD,USE, by.x="c3.PLOT", by.y="parcel")
+setwd("C:/Users/trevorcaughlin/Dropbox/R files/reforestation R code/PRORENA/PRORENA_forTREVOR")
+setwd("C:/Users/Trevor/Dropbox/R files/reforestation R code/PRORENA/PRORENA_forTREVOR")
+ALLplots<-read.csv("PRORENAplots_BANDS.csv")
+DEM<-read.table("ExportdemTable.txt",header=T,sep=",")
+Dkey<-paste(DEM$X,DEM$Y,sep="")
+pKEY2<-paste(ALLplots$x,ALLplots$y,sep="")
+ALL2<-data.frame(pKEY2,ALLplots)
+DEM2<-data.frame(Dkey,DEM)
+allD<-merge(ALL2,DEM2,by.x="pKEY2",by.y="Dkey")[,-c(159,158,157,156)]
+dim(onlyGOOD)
+plot(onlyGOOD$growth~onlyGOOD$spp)
+onlyG<-onlyGOOD[,-1]
+#######I HAVE MY DOUBTS ABOUT THE ALL DAT. why aren't the bands right?
+groALL<-merge(onlyG,allD,by.x="Group.1",by.y="PRORENA_PLOT")
+#ALL SPECIES
+#NOT STANDARDIZED
+bandies<-groALL[8:157]
+get.these<-c(seq(from=1,to=30,by=2),seq(from=31,to=100,by=5),seq(from=101,to=150,by=10))
+use.b<-bandies[,get.these]
+use.bs<-apply(use.b,2,stdize)
+groFrame<-data.frame(groALL$growth,use.bs)
+groFrame<-data.frame(groALL$growth,use.bs,groALL$spp)
+#groALL2<-merge(allD,onlyG,by.x="PRORENA_PLOT",by.y="Group.1")
+spp2<-c(
+#these all have two
+"cordal","diphro","erytfu","glirse","luehse","pachqu","tectgr",
+"termam",
+#these have 3
+"albiad",
+"calyca",
+"cedrod",
+"entecy",
+"sponmo")
+spp3<-c(#these have 3
+"albiad",
+"calyca",
+"cedrod",
+"entecy",
+"sponmo",
+"glirse",
+"guazul",
+"luehse",
+"pachqu",
+"tectgr")
+gro3<-subset(groALL,groALL$spp %in% spp3)
+gro2<-subset(groALL,groALL$spp %in% spp2)
+groA<-groALL
+groA$spp<-as.numeric(groA$spp)
+groAGG<-aggregate(groA, by=list(groA$Group.1), mean)
+bandsAGG<-groAGG[,c(9:158)]
+#buse<-bandsAGG[,seq(from=1,to=150,by=10)]
+buse<-bandsAGG[,c(seq(from=1,to=44,by=10),seq(from=45, to=150, by=30))]/bandsAGG[,44]
+buse<-bandsAGG[,seq(from=1,to=150,by=50)]
+datz<-data.frame(groAGG$gro,buse)
+mAG<-lm(groAGG.gro~.,data=datz)
+palette(rainbow(20))
+plot(predict(mAG)~datz$gr,bg=as.factor(groAGG$spp),pch=21,cex=2,
+xlab="Observed DBH growth",ylab="Predicted DBH growth",col="gray30",cex.lab=1.4)
+abline(0,1,lwd=4)
+###########THINNED BANDS ABOVE
+#Now spectral indices
+cao<-read.csv("cao_corrected_wavelengths.csv")
+cao<-subset(cao,cao$badband==1)
+bNUM<-c(1:150)
+cao<-cbind(cao,bNUM)
+wave<-round(cao$wavelength)
+specs<-read.csv("spec_indices.csv")
+#44
+#150
+go<-vector("list",150)
+#RATIO
+#min(resultio)
+#[1] 2.882272
+indices<-vector("list",150)
+for(i in 1:150) {
+mat.use<-bandsAGG/bandsAGG[,i]
+mat<-mat.use[,-i]
+colnames(mat)<-NULL
+rownames(mat)<-NULL
+go[[i]]<-mat
+}
+hey<-do.call(cbind,go)
+for(i in 1:150) {
+nameo<-colnames(bandsAGG)[i]
+mat.use<-paste(colnames(bandsAGG),nameo,sep="/")
+mat<-mat.use[-i]
+indices[[i]]<-mat
+}
+indo<-do.call(c,indices)
+resultio<-rep(NA,times=dim(hey)[2])
+for(i in 1:dim(hey)[2]){
+resultio[i]<-PRESS(lm(groAGG$gro~hey[,i]))
+}
+plot(resultio~c(1:22350))
+#2701  2850  3151  3300 19507 19656 19953 19954 20102 20398 20399 20544 20545
+#20547
+which(resultio<2.95)
+#you got to figure out indexing system
+testy<-bandsAGG[,20]/bandsAGG[,19]
+PRESS(lm(groAGG$gro~testy))
+indo[c(which(resultio<2.95))]
+#STDIZE
+#
+#
+#
+#150
+gos<-vector("list",150)
+for(i in 1:150) {
+mat.use<-(bandsAGG-bandsAGG[,i])/(bandsAGG+bandsAGG[,i])
+mat<-mat.use[,-i]
+colnames(mat)<-NULL
+rownames(mat)<-NULL
+gos[[i]]<-mat
+}
+heys<-do.call(cbind,gos)
+resultios<-rep(NA,times=dim(hey)[2])
+for(i in 1:dim(heys)[2]){
+resultios[i]<-PRESS(lm(groAGG$gro~heys[,i]))
+}
+plot(resultios~c(1:22350))
+which(resultios<3)
+#you got to figure out indexing system
+testy<-bandsAGG[,19]/bandsAGG[,20]
+testo2<-bandsAGG[,135]/bandsAGG[,137]
+PRESS(lm(groAGG$gro~testy+testo2))
+PRESS(lm(groAGG$gro~testy*testo2))
+best<-lm(groAGG$gro~testy*testo2)
+best2<-lm(groAGG$gro~testy+testo2)
+plot(predict(best2)~groAGG$gro,bg=as.factor(groAGG$spp),pch=21,cex=2,
+xlab="Observed DBH growth",ylab="Predicted DBH growth",col="gray30",cex.lab=1.4)
+abline(0,1,lwd=4)
+head(groAGG)
+best3<-lm(groAGG$gro~testy+testo2+groAGG$EXDEM_1)
+PRESS(best3)
+PRESS(best2)
+summary(best2)
+summary(best3)
+best4<-lm(groAGG$gro~groAGG$EXDEM_1)
+PRESS(best4)
+best4<-lm(groAGG$gro~1)
+PRESS(best4)
+PRESS(best2)
+library("spam")
+setwd("C:\Users\trevorcaughlin\Dropbox\R files\Thailand\2010-2011\population stuff\HPC code new 2.25")
+setwd("C:/Users/trevorcaughlin/Dropbox/R files/Thailand/2010-2011/population stuff/HPC code new 2.25")
+load("Inits200m.Rdata")
+initial.conditions.94<-Inits200m
+initial.conditions.94
+initial.conditions.94[[1]]
+inits<-initial.conditions.94
+inits
+#set the boundaries of the plot
+L<-200
+#initialize the dispersal kernel
+L2<-L*2
+nddist<-20
+library("spam")
+smatADULTseeds<-
+function(adults,seeds,alpha.est,dis.est,alpha.sg,dis.sg) #takes as input the entire matrix of seedlings
+###need to change this so only adults >20
+#change to reflect neighborhood radius for seedlings?
+#change main code so that it takes the output from the list as a dollar sign
+{
+adults<-as.matrix(adults)
+size<-adults[,1]
+if(length(adults)==4) {
+x.off<-seeds[,1]
+y.off<-seeds[,2]
+dis1<-dis.fx.torus(adults[2],adults[3],x.off,y.off)
+surv<-ifelse(dis1<nddist,alpha.est*(adults[1]/dis1^dis.est),0)
+sgro<-ifelse(dis1<nddist,alpha.est*(adults[1]/dis1^dis.sg),0)
+return(list(nddEST=surv,sgro=sgro))}
+else {
+ads1<-adults[,2:3]
+snmat<-nearest.dist(seeds,ads1,method="toroidal",delta=nddist,L=L)
+sizemat<-snmat
+pos<-triplet(sizemat,tri=TRUE)
+sizemat@entries=size[pos$j]
+snmat@entries<-snmat@entries+0.0001
+snmat@entries<-snmat@entries^dis.est
+nddEST<-alpha.est*rowSums(sizemat/snmat,na.rm=T) #####DOUBLE CHECK THIS sum or rowSUMS more appropriate?
+snmat@entries<-snmat@entries^(1/dis.est)
+snmat@entries<-snmat@entries^dis.sg
+sgro<-alpha.sg*rowSums(sizemat/snmat,na.rm=T) #####DOUBLE CHECK THIS sum or rowSUMS more appropriate?
+return(list(nddEST=nddEST,sgro=sgro))
+}
+}
+torus<-function(x,y,L) {
+size=1
+negL<-L*(-1)
+s1<-ifelse(x>2*L,0,size)
+s2<-ifelse(y>2*L,0,s1) #no long distance dispersal. assuming that if size goes to zero, then the plant is considered DEAD
+s3<-ifelse(x<negL,0,s2)
+s4<-ifelse(y<negL,0,s3)
+x1<-ifelse(x>L,x-L,x)
+y1<-ifelse(y>L,y-L,y)
+x3<-ifelse(x<0,x1+L,x1)
+y3<-ifelse(y<0,y1+L,y1)
+return(cbind(x3[which(s4==1)],y3[which(s4==1)]))
+}
+#########calculating neighborhoods around seeds
+#########calculating neighborhoods around seeds
+#########calculating neighborhoods around seeds
+#adult neighborhoods
+#this function calculates distance between two points in a torus
+minitor<-function(x1,x2) {pmin(abs(x1-x2),L-abs(x1-x2))}
+#calculates distance for a pair of two points
+dis.fx.torus<-function(x1,y1,x2,y2) {sqrt(minitor(x1,x2)^2+minitor(y1,y2)^2)}
+#creates the distance matrices
+dmatSEEDS<-function(ads1,x.off,y.off)
+{
+ads1=ads1
+x.off=x.off
+y.off=y.off
+dismat<-sqrt(outer(x.off,ads1[,1], "minitor")^2 + outer(y.off,ads1[,2],  #assuming that rows 2 and 3 are correct
+"minitor")^2)
+return(dismat)}
+#applies distance matrix to create vectors of survival and initial seedling establishment
+#applies distance matrix to create vectors of survival and initial seedling establishment
+#applies distance matrix to create vectors of survival and initial seedling establishment
+#########calculating seedling neighborhoods around seeds
+#########calculating seedling neighborhoods around seeds
+#########calculating seedling neighborhoods around seeds
+#########calculating seedling neighborhoods around seeds
+SEEDsSLINGSnhoodNDD<-function(seeds,test)
+{
+xvalz<-paste("(",floor(seeds[,1]),",",ceiling(seeds[,1]),"]",sep="")
+yvalz<-paste("(",floor(seeds[,2]),",",ceiling(seeds[,2]),"]",sep="")
+seedlocs<-paste(xvalz,yvalz,sep="+")
+xvalzSEEDLINGS<-paste("(",floor(test[which(test[,1]!=0),2]),",",ceiling(test[which(test[,1]!=0),2]),"]",sep="")
+yvalzSEEDLINGS<-paste("(",floor(test[which(test[,1]!=0),3]),",",ceiling(test[which(test[,1]!=0),3]),"]",sep="")
+seedlinglocs<-paste(xvalzSEEDLINGS,yvalzSEEDLINGS,sep="+")
+if(length(seedlocs) != 0) {
+testy<-rep(0,times=length(seedlocs))
+for(i in 1:length(seedlocs) ){
+testy[i]<-sum(seedlinglocs==seedlocs[i])
+}
+return(testy)
+} else{ return(0)}
+}
+setwd("C:/Users/trevorcaughlin/Dropbox/R files/Thailand/2010-2011/population stuff/HPC code new 2.25")
+################THIS READS IN THE PARAMETER VALUES FROM THE STATISTICAL ANALYSIS
+# IBMpars<-read.csv("IBMpars11.27.csv",header=T)
+IBMpars<-read.csv("IBMpars12.16.csv",header=T)
+###############FOR THE TEST RUNS, I have been just looking at the median parameter values
+med.par<-lapply(IBMpars,median)
+attach(med.par)
+#set the boundaries of the plot
+L<-200
+#initialize the dispersal kernel
+L2<-L*2
+nddist<-20
+adults<-inits
+adults
+seeds<-data.frame(runif(10),runif(10))
+seeds
+adults
+smatADULTseeds(adults,seeds,alpha.est,dis.est,alpha.sg,dis.sg)
+dim(adults)
+adults
+str(adults)
+adults<-inits[[1]]
+str(adults)
+smatADULTseeds(adults,seeds,alpha.est,dis.est,alpha.sg,dis.sg)
+nearest.dist
+.libPaths()
+2/1

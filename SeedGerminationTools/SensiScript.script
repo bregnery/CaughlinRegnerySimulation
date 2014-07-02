@@ -1,0 +1,9 @@
+for flag in 1
+	do
+	for iter in {1..1000}
+		do
+		sed -e "s/ITER/$iter/g; s/FLAG/$flag/g" IBMsensitivity.sh > autoscripts/IBMsensitivity.VAR${flag}.ITER${iter}.sh
+		qsub autoscripts/IBMsensitivity.VAR${flag}.ITER${iter}.sh
+	done
+done
+
