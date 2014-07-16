@@ -89,11 +89,4 @@ curve(exp(1.086479+0.009284*x),add=T,col="red")
 #Create a Box Plot for Seed Distance vs. Stocasticity
 plot(outty$distance~as.factor(outty$Stochasticity),cex=0.8)
 
-
-
-
-
-
-
-
-
+#
