@@ -230,6 +230,9 @@ location<-function(times, x, y, i) {
 
 adultR<-inits[[1]]
 
+#if the movement distance is less than the step distance, there will be no randomness, the animal
+#     will move directly between trees
+
 Boyer<-function(times, adults, stepdist, ANG=0.0872,...) {
   tree1<-treelocs(adults)
   
