@@ -7,7 +7,7 @@ source("BoyerSeedCombFunctions.R")
 #spends a certain amount of time there
 #then goes to the next biggest tree
 # does not return to the same tree for 100 time steps
-seed.locs<-na.omit(Boyer(25,adultR,1000,ANG=0))
+seed.locs<-na.omit(Boyer(25,adultR,10,ANG=0))
 
 #################running
 
@@ -44,7 +44,7 @@ nruns<-length(stoch.use)
 
 seed.vec<-rep(NA,times=nruns)
 for(i in 1:nruns) {
-  seed.locs<-na.omit(Boyer(25,adultR,1000,ANG=stoch.use[i]))
+  seed.locs<-na.omit(Boyer(25,adultR,10,ANG=stoch.use[i]))
 
   #################running
 
