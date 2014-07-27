@@ -287,7 +287,6 @@ Boyer<-function(times, adults, stepdist, ANG=0.0872,...) {
       
       
       d=tree.distance(x[i-1],y[i-1],treeM)
-      
       dis.sort<-sort(d)
       xp[i]=treeM[which(d==dis.sort[1]),1]
       yp[i]=treeM[which(d==dis.sort[1]),2]
@@ -341,7 +340,7 @@ Boyer<-function(times, adults, stepdist, ANG=0.0872,...) {
   lines(x,y,type="l") #,...)
   points(x,y,pch=19,cex=1.5)
   
-  for(j in 1:length(adults)) {
+  for(j in 1:length(tree1)/2) {
     draw.circle(tree1[j,1],tree1[j,2],radius=10,border="green",lwd=2,col=NA)
   }
   
