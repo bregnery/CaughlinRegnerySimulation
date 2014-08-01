@@ -260,8 +260,8 @@ Boyer<-function(times, adults, stepdist, ANG=0.0872,...) {
   seed.distance=rep(NA,100)
   theta.Stoc<-runif(times,min=-ANG,max=ANG)
   
-  x[1]<-tree1[1,1]
-  y[1]<-tree1[1,2]
+  x[1]<-tree1[41,1]
+  y[1]<-tree1[41,2]
   
   for (i in 2:times){
     treeM<-treeL[[i-1]]
