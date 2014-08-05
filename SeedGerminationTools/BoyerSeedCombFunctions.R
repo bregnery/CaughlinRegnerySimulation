@@ -9,13 +9,13 @@ IBMpars<-read.csv("IBMpars12.16.csv",header=T)
 med.par<-lapply(IBMpars,median)
 attach(med.par)
 
-load("Inits200m.Rdata")
-initial.conditions.94<-Inits200m #should be a list
+load("Inits.Rdata")
+initial.conditions.94<-Inits #should be a list
 
 inits<-initial.conditions.94
 
 #set the boundaries of the plot
-L<-200
+L<-400
 
 #initialize the dispersal kernel
 L2<-L*2
@@ -151,13 +151,12 @@ library("plotrix")
 
 treelocs<-function(adults) {
   
-  
   trees1<-adults[,2]
   trees2<-adults[,3]
   
   trees<-cbind(trees1,trees2)
   
-  plot(trees[,1]~trees[,2])
+  #plot(trees[,1]~trees[,2])
   return(trees)
 }
 
@@ -233,7 +232,12 @@ adultR<-inits[[1]]
 #if the movement distance is less than the step distance, there will be no randomness, the animal
 #     will move directly between trees
 
-Boyer<-function(times, adults, stepdist, ANG=0.0872,...) {
+Boyer<-function(times, adult, stepdist, seeds, ANG=0.0872,...) {
+  
+  adults<-adult[which(adult[,1]>20),]
+  
+  start.row<-which(adults[,1]==34.68)
+  
   tree1<-treelocs(adults)
   
   treeSIZE<-adults[,1]
@@ -254,14 +258,16 @@ Boyer<-function(times, adults, stepdist, ANG=0.0872,...) {
   time.move = rep(NA,times)
   time.current = rep(NA,times)
   time.current[1] = 0
-  time.poop = rep(NA,100)
-  seed.x=rep(NA,100)
-  seed.y=rep(NA,100)
-  seed.distance=rep(NA,100)
+  time.poop = rep(NA,seeds)
+  seed.x=rep(NA,seeds)
+  seed.y=rep(NA,seeds)
+  seed.distance=rep(NA,seeds)
   theta.Stoc<-runif(times,min=-ANG,max=ANG)
   
-  x[1]<-tree1[41,1]
-  y[1]<-tree1[41,2]
+  x[1]<-tree1[start.row,1]
+  y[1]<-tree1[start.row,2]
+  
+  print(c(x[1],y[1]))
   
   for (i in 2:times){
     treeM<-treeL[[i-1]]
@@ -311,13 +317,13 @@ Boyer<-function(times, adults, stepdist, ANG=0.0872,...) {
         treeL[[i]]<-treeM
       }
     }
-    time.move[i]=moveTime(0.5,x,y,i)
-    time.total= time.total + time.move[i] + 30
+    time.move[i]=moveTime(0.5,x,y,i)/3600    # Chang paper, lists gibbon velocities
+    time.total= time.total + time.move[i] + 0.5 # Adding rest time at tree
     time.current[i]=time.total
   }
   
   #Poop time
-  time.poop0<-(rexp(100,rate=0.004))
+  time.poop0<-(rexp(100,rate=(log(2)/23)))     # Gibbon Passage from McConkey
   time.poop<-sort(ifelse(time.poop0>time.total,time.total,time.poop0))
   
   #Seed location
@@ -339,13 +345,13 @@ Boyer<-function(times, adults, stepdist, ANG=0.0872,...) {
   }
   #hist(seed.distance,breaks=10,main="Seed Distance to the Nearest Tree")
   treeM1<-treeL[[1]]
-  plot(treeM1[,1],treeM1[,2],pch="",xlim=c(-1,200),ylim=c(-1,200), main="Memory-Based", xlab="X(meters)", ylab="Y(meters)")
+  plot(treeM1[,1],treeM1[,2],pch=19,cex=0.5,col="red",xlim=c(-1,400),ylim=c(-1,400), main="Memory-Based", xlab="X(meters)", ylab="Y(meters)")
   lines(x,y,type="l") #,...)
-  points(x,y,pch=19,cex=1.5)
+  points(x,y,pch=19,cex=1)
   
-  for(j in 1:length(tree1)/2) {
-    draw.circle(tree1[j,1],tree1[j,2],radius=10,border="green",lwd=2,col=NA)
-  }
+  #for(j in 1:length(tree1)/2) {
+  #  draw.circle(tree1[j,1],tree1[j,2],radius=10,border="green",lwd=2,col=NA)
+  #}
   
   #plot(treeM[,1],treeM[,2],pch=21,cex=1,bg="red",main="Seed Dispersal Plot", xlab="X(meters)",ylab="Y(meters)")
   points(seed.x,seed.y,cex=0.9,pch=19,col="brown")
