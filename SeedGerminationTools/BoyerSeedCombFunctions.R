@@ -345,7 +345,7 @@ Boyer<-function(times, adult, stepdist, seeds, ANG=0.0872,...) {
   }
   #hist(seed.distance,breaks=10,main="Seed Distance to the Nearest Tree")
   treeM1<-treeL[[1]]
-  plot(treeM1[,1],treeM1[,2],pch=19,cex=0.5,col="red",xlim=c(-1,400),ylim=c(-1,400), main="Memory-Based", xlab="X(meters)", ylab="Y(meters)")
+  plot(treeM1[,1],treeM1[,2],pch=19,cex=0.5,col="red",xlim=c(-1,400),ylim=c(-1,400), main="", xlab="X(meters)", ylab="Y(meters)")
   lines(x,y,type="l") #,...)
   points(x,y,pch=19,cex=1)
   
