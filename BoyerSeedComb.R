@@ -12,13 +12,13 @@ source("BoyerSeedCombFunctions.R")
 #dev.off()
 #################running
 
-news<-cbind(seed.locs[,1],seed.locs[,2]) #this will be where you put x and y coordinates of seeds from boyer model
+#news<-cbind(seed.locs[,1],seed.locs[,2]) #this will be where you put x and y coordinates of seeds from boyer model
 
-nbor.seeds<-smatADULTseeds(adultR,news,alpha.est,dis.est,alpha.sg,dis.sg) #news is a matrix of x and y cos from seeds
+#nbor.seeds<-smatADULTseeds(adultR,news,alpha.est,dis.est,alpha.sg,dis.sg) #news is a matrix of x and y cos from seeds
 #a caveat here is that seeds only use adults over 20 m only, but seedlings *should* be taking all adults
 
-nborADULTS<-nbor.seeds$nddEST
-nbor.sgro<-nbor.seeds$sgro
+#nborADULTS<-nbor.seeds$nddEST
+#nbor.sgro<-nbor.seeds$sgro
 
 #seedling vector
 
@@ -35,9 +35,9 @@ newRECRUITSsurvive1<-rbinom(length(news[,1]),size=1,prob=plogis(mu.est+nborADULT
 
 
 #write code to loop over the boyermodel with x and y coordinates of seeds as output, then apply this code
-nsim<-20
+nsim<-60
 
-stoch<-seq(from=0,to=2*pi,by=0.1)
+stoch<-seq(from=0,to=pi,by=0.1)
 
 stoch.use<-rep(stoch,times=nsim)
 
@@ -48,7 +48,7 @@ total.seeds<-rep(NA,times=nruns)
 
 output<-vector("list",nruns)
 
-#pdf(file="gibbonruns.pdf")
+pdf(file="gibbonruns.pdf")
 
 for(i in 1:nruns) {
   seed.locs<-na.omit(Boyer(200,adultR,10,100, ANG=stoch.use[i]))
@@ -114,13 +114,13 @@ curve(exp(coef(m1)[1]+coef(m1)[2]*x+coef(m1)[3]*x^2),add=T,col="red",lwd=2)
 
 #Create a Box Plot for Seed Distance vs. Stocasticity
 plot(outty$distance~as.factor(outty$Stochasticity),cex=0.8)
-
-dev.off()
+#dev.off()
 
 
 
 curve(plogis(mu.est+((alpha.est/1)*((90)/(x)^(dis.est)))),from=0,to=20,ylim=c(0,0.03),cex.lab=1.4,cex.axis=1.2,xlab="Distance to neighbor tree (m)",
       ylab="Germination")
 
+dev.off()
 
 #
